@@ -21,12 +21,10 @@ const Dashboard = () => {
   const [stats, setStats] = useState({});
   const [ventasMensuales, setVentasMensuales] = useState([]);
 
-  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api"; // Cambia a la URL de tu backend en Azure
-
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get(`${API_URL}/pedidos/resumen-dashboard`);
+        const res = await axios.get("http://localhost:3000/api/pedidos/resumen-dashboard");
         setStats(res.data);
         setVentasMensuales(res.data.ventasMensuales || []);
       } catch (error) {

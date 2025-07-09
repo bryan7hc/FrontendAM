@@ -7,13 +7,9 @@ export default function Usuario() {
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
 
-  // Cambiar a la URL de tu backend en Azure
-  const API_URL =
-    "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios";
-
   const obtenerUsuarios = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get("http://localhost:3000/api/admin/usuarios");
       setUsuarios(res.data);
     } catch (error) {
       console.error("Error al obtener usuarios:", error);
@@ -40,9 +36,8 @@ export default function Usuario() {
       const { usuario_id, nombre, correo, telefono, contraseña } =
         usuarioSeleccionado;
 
-      // Cambiar a la URL de tu backend en Azure
       await axios.put(
-        `https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios/${usuario_id}`,
+        `http://localhost:3000/api/admin/usuarios/${usuario_id}`,
         { nombre, correo, telefono, contraseña }
       );
 
@@ -54,20 +49,21 @@ export default function Usuario() {
   };
 
   const eliminarUsuario = async (id) => {
-    if (!window.confirm("¿Seguro que deseas eliminar este usuario?")) return;
-    try {
-      // Cambiar a la URL de tu backend en Azure
-      await axios.put(
-        `https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios/${id}/eliminar`
-      );
-      obtenerUsuarios();
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error);
-    }
-  };
+  if (!window.confirm("¿Seguro que deseas eliminar este usuario?")) return;
+  try {
+    // Eliminación lógica (estado = 'eliminado')
+    await axios.put(`http://localhost:3000/api/admin/usuarios/${id}/eliminar`);
+    obtenerUsuarios();
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+  }
+};
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
+      
+
       <div className="ml-60 flex-1 p-8">
         <h1 className="text-3xl font-bold mb-6">Gestión de Usuarios</h1>
 

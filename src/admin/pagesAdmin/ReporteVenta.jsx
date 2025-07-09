@@ -8,21 +8,20 @@ const ReporteVentas = () => {
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
 
-  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/reportes/ventas"; // Cambia a tu URL de Azure
-
   const fetchVentas = async () => {
-    try {
-      const res = await axios.get(API_URL, {
-        params: {
-          fechaInicio: fechaInicio || undefined,
-          fechaFin: fechaFin || undefined,
-        },
-      });
-      setVentas(res.data);
-    } catch (error) {
-      console.error("Error al obtener reporte:", error);
-    }
-  };
+  try {
+    const res = await axios.get("http://localhost:3000/api/reportes/ventas", {
+      params: {
+        fechaInicio: fechaInicio || undefined,
+        fechaFin: fechaFin || undefined,
+      },
+    });
+    setVentas(res.data);
+  } catch (error) {
+    console.error("Error al obtener reporte:", error);
+  }
+};
+
 
   useEffect(() => {
     fetchVentas(); // Carga inicial sin filtro

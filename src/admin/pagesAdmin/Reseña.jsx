@@ -6,12 +6,9 @@ const Reseña = () => {
   const [resenas, setResenas] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // Cambia la URL a la de tu backend en Azure
-  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/resenas";
-
   const obtenerResenas = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:3000/api/admin/resenas");
       setResenas(response.data);
     } catch (error) {
       console.error("Error al cargar reseñas:", error);
@@ -25,8 +22,7 @@ const Reseña = () => {
     if (!confirmar) return;
 
     try {
-      // Cambia la URL a la de tu backend en Azure
-      await axios.delete(`https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/resenas/${id}`);
+      await axios.delete(`http://localhost:3000/api/admin/resenas/${id}`);
       setResenas(resenas.filter((resena) => resena.reseña_id !== id));
     } catch (error) {
       console.error("Error al eliminar reseña:", error);
