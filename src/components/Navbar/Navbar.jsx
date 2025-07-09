@@ -4,6 +4,7 @@ import Logo from "../../assets/Logo2.png";
 import Register from "../Register/Register";
 import Login from "../auth/Login";
 
+// Enlaces de navegación
 const navbarLinks = [
   { id: 1, title: "Inicio", to: "/" },
   { id: 2, title: "Nuestros vehículos", to: "/categories" },
@@ -18,11 +19,13 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
+  // Verificar si el usuario está guardado en localStorage al cargar la página
   useEffect(() => {
     const storedUser = localStorage.getItem("usuario");
     if (storedUser) setUsuario(JSON.parse(storedUser));
   }, []);
 
+  // Cerrar el dropdown si se hace clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
