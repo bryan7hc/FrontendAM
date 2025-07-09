@@ -6,20 +6,19 @@ import Footer from "../components/Footer/Footer";
 import slugify from "../utils/slugify";
 
 const CatalogoPorCategoria = () => {
-  const { categoria } = useParams();
+  const { categoria } = useParams(); // Categoria obtenida de la URL
   const [vehiculos, setVehiculos] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL; // Usamos la variable de entorno para la URL del backend
-  const backendUrl = `${API_URL}/imagenes`;
+  const backendUrl = `${API_URL}/imagenes`; // URL base para las imágenes
 
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
-        // Usamos la variable de entorno para la URL de la API
-        const res = await axios.get(`${API_URL}/api/vehiculos/categoria/${categoria}`);
-        const filtrados = res.data.filter(
-          (v) => v.categoria.toLowerCase() === categoria.toLowerCase()
+        // Hacer la solicitud para obtener vehículos por categoría
+        const res = await axios.get(
+          `${API_URL}/api/vehiculos/categoria/${categoria}`
         );
-        setVehiculos(filtrados);
+        setVehiculos(res.data);
       } catch (error) {
         console.error("Error al obtener vehículos:", error);
       }
@@ -40,12 +39,12 @@ const CatalogoPorCategoria = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {vehiculos.map((vehiculo) => (
               <Link
-                to={`/categories/${categoria}/${slugify(vehiculo.nombre)}`}
+                to={`/categories/${categoria}/${slugify(vehiculo.nombre)}`} // Navegar al detalle del vehículo
                 key={vehiculo.vehiculo_id}
                 className="bg-white shadow rounded-lg p-4 hover:shadow-lg transition"
               >
                 <img
-                  src={`${backendUrl}/${vehiculo.imagen}`}
+                  src={`${backendUrl}/${vehiculo.imagen}`} // Imagen de vehículo
                   alt={vehiculo.nombre}
                   className="h-48 w-full object-contain mb-4"
                 />
