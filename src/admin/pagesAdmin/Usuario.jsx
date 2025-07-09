@@ -8,8 +8,7 @@ export default function Usuario() {
   const [mostrarModal, setMostrarModal] = useState(false);
 
   // Cambiar a la URL de tu backend en Azure
-  const API_URL =
-    "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios";
+  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios";
 
   const obtenerUsuarios = async () => {
     try {
@@ -57,9 +56,7 @@ export default function Usuario() {
     if (!window.confirm("¿Seguro que deseas eliminar este usuario?")) return;
     try {
       // Cambiar a la URL de tu backend en Azure
-      await axios.put(
-        `https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios/${id}/eliminar`
-      );
+      await axios.put(`https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/usuarios/${id}/eliminar`);
       obtenerUsuarios();
     } catch (error) {
       console.error("Error al eliminar usuario:", error);

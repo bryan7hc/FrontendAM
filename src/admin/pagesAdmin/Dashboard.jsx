@@ -21,10 +21,13 @@ const Dashboard = () => {
   const [stats, setStats] = useState({});
   const [ventasMensuales, setVentasMensuales] = useState([]);
 
+  const API_URL =
+    "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api"; // Cambia a la URL de tu backend en Azure
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/pedidos/resumen-dashboard");
+        const res = await axios.get(`${API_URL}/pedidos/resumen-dashboard`);
         setStats(res.data);
         setVentasMensuales(res.data.ventasMensuales || []);
       } catch (error) {
@@ -47,18 +50,9 @@ const Dashboard = () => {
           title="Pedidos Confirmados"
           value={stats.pedidosConfirmados || 0}
         />
-        <Card
-          title="Pedidos Pendientes"
-          value={stats.pedidosPendientes || 0}
-        />
-        <Card
-          title="Clientes Registrados"
-          value={stats.totalClientes || 0}
-        />
-        <Card
-          title="Stock Total Vehículos"
-          value={stats.stockTotal || 0}
-        />
+        <Card title="Pedidos Pendientes" value={stats.pedidosPendientes || 0} />
+        <Card title="Clientes Registrados" value={stats.totalClientes || 0} />
+        <Card title="Stock Total Vehículos" value={stats.stockTotal || 0} />
         <Card
           title="Vehículo Más Vendido"
           value={stats.vehiculoMasVendido || "—"}
@@ -71,7 +65,10 @@ const Dashboard = () => {
         </h3>
         {ventasMensuales.length > 0 ? (
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={ventasMensuales} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+            <BarChart
+              data={ventasMensuales}
+              margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="mes" />
               <YAxis />
