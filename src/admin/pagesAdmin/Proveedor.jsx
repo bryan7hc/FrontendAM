@@ -11,13 +11,15 @@ const Proveedor = () => {
   });
   const [editando, setEditando] = useState(null);
 
+  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/proveedores"; // Cambia a la URL de tu backend en Azure
+
   useEffect(() => {
     obtenerProveedores();
   }, []);
 
   const obtenerProveedores = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/proveedores");
+      const res = await axios.get(API_URL);
       setProveedores(res.data);
     } catch (error) {
       console.error("Error al obtener proveedores:", error);
@@ -39,11 +41,11 @@ const Proveedor = () => {
     try {
       if (editando !== null) {
         await axios.put(
-          `http://localhost:3000/api/proveedores/${editando}`,
+          `${API_URL}/${editando}`,
           form
         );
       } else {
-        await axios.post("http://localhost:3000/api/proveedores", form);
+        await axios.post(API_URL, form);
       }
 
       obtenerProveedores();
@@ -60,9 +62,9 @@ const Proveedor = () => {
   };
 
   const handleEliminar = async (id) => {
-    if (!window.confirm("¿Seguro que deseas eliminar este proveedor?")) return;
+    if (!window.confirm("¿Estás seguro que deseas eliminar este proveedor?")) return;
     try {
-      await axios.delete(`http://localhost:3000/api/proveedores/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
       obtenerProveedores();
     } catch (error) {
       console.error("Error al eliminar proveedor:", error);
