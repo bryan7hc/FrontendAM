@@ -16,13 +16,15 @@ export default function Vehiculo() {
   const [editando, setEditando] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
 
+  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/admin/vehiculos"; // Cambia a tu URL de Azure
+
   useEffect(() => {
     obtenerVehiculos();
   }, []);
 
   const obtenerVehiculos = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/vehiculos");
+      const res = await axios.get(API_URL);
       setVehiculos(res.data);
     } catch (error) {
       console.error("Error al obtener vehículos:", error);
@@ -62,12 +64,9 @@ export default function Vehiculo() {
     e.preventDefault();
     try {
       if (editando) {
-        await axios.put(
-          `http://localhost:3000/api/admin/vehiculos/${editando}`,
-          form
-        );
+        await axios.put(`${API_URL}/${editando}`, form);
       } else {
-        await axios.post("http://localhost:3000/api/admin/vehiculos", form);
+        await axios.post(API_URL, form);
       }
       obtenerVehiculos();
       cerrarModal();
@@ -80,7 +79,7 @@ export default function Vehiculo() {
     if (!window.confirm("¿Estás seguro que deseas eliminar este vehículo?"))
       return;
     try {
-      await axios.delete(`http://localhost:3000/api/admin/vehiculos/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
       obtenerVehiculos(); // Refrescar lista
     } catch (error) {
       console.error("Error al eliminar vehículo:", error);
@@ -89,7 +88,6 @@ export default function Vehiculo() {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      
       <div className="ml-60 w-full p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Gestión de Vehículos</h1>
@@ -180,34 +178,7 @@ export default function Vehiculo() {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-2 gap-4 text-sm"
               >
-                {[
-                  { name: "nombre", placeholder: "Nombre" },
-                  { name: "precio", type: "number", placeholder: "Precio" },
-                  { name: "stock", type: "number", placeholder: "Stock" },
-                  { name: "modelo", placeholder: "Modelo" },
-                  { name: "color", placeholder: "Color" },
-                  { name: "motor", placeholder: "Motor" },
-                  { name: "transmision", placeholder: "Transmisión" },
-                  {
-                    name: "kilometraje",
-                    type: "number",
-                    placeholder: "Kilometraje",
-                  },
-                  { name: "combustible", placeholder: "Combustible" },
-                  {
-                    name: "puertas",
-                    type: "number",
-                    placeholder: "N° de puertas",
-                  },
-                  {
-                    name: "asientos",
-                    type: "number",
-                    placeholder: "N° de asientos",
-                  },
-                  { name: "condicion", placeholder: "Condición" },
-                  { name: "garantia", placeholder: "Garantía" },
-                  { name: "ubicacion", placeholder: "Ubicación" },
-                ].map(({ name, placeholder, type = "text" }) => (
+                {[{ name: "nombre", placeholder: "Nombre" }, { name: "precio", type: "number", placeholder: "Precio" }, { name: "stock", type: "number", placeholder: "Stock" }, { name: "modelo", placeholder: "Modelo" }, { name: "color", placeholder: "Color" }, { name: "motor", placeholder: "Motor" }, { name: "transmision", placeholder: "Transmisión" }, { name: "kilometraje", type: "number", placeholder: "Kilometraje" }, { name: "combustible", placeholder: "Combustible" }, { name: "puertas", type: "number", placeholder: "N° de puertas" }, { name: "asientos", type: "number", placeholder: "N° de asientos" }, { name: "condicion", placeholder: "Condición" }, { name: "garantia", placeholder: "Garantía" }, { name: "ubicacion", placeholder: "Ubicación" }].map(({ name, placeholder, type = "text" }) => (
                   <input
                     key={name}
                     type={type}
