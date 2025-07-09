@@ -4,10 +4,11 @@ import Logo from "../../assets/Logo2.png";
 import Register from "../Register/Register";
 import Login from "../auth/Login";
 
-const navbarlinks = [
-  { id: 1, title: "Inicio", link: "http://localhost:5173/#" },
-  { id: 2, title: "Nuestros vehículos", link: "/categories" },
-  { id: 3, title: "Quiénes somos", link: "/quienes-somos" },
+// Ahora con propiedad `to` en lugar de `link`
+const navbarLinks = [
+  { id: 1, title: "Inicio", to: "/" },
+  { id: 2, title: "Nuestros vehículos", to: "/categories" },
+  { id: 3, title: "Quiénes somos", to: "/quienes-somos" },
 ];
 
 const Navbar = () => {
@@ -60,19 +61,23 @@ const Navbar = () => {
         <div className="max-w-screen-xl mx-auto flex justify-between items-center px-4 sm:px-8 py-3">
           {/* Logo */}
           <Link to="/">
-            <img src={Logo} alt="Logo" className="w-28 sm:w-32 object-contain" />
+            <img
+              src={Logo}
+              alt="Logo"
+              className="w-28 sm:w-32 object-contain"
+            />
           </Link>
 
           {/* Enlaces */}
           <ul className="flex space-x-6 sm:space-x-10 text-sm sm:text-base font-medium text-gray-700">
-            {navbarlinks.map((link) => (
+            {navbarLinks.map((link) => (
               <li key={link.id}>
-                <a
-                  href={link.link}
+                <Link
+                  to={link.to}
                   className="hover:text-red-600 transition-colors duration-300"
                 >
                   {link.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
