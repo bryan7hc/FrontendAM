@@ -18,13 +18,11 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Verifica si hay usuario guardado en el localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("usuario");
     if (storedUser) setUsuario(JSON.parse(storedUser));
   }, []);
 
-  // Cerrar el dropdown si se hace clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -35,25 +33,21 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Mostrar login y ocultar registro
   const openLogin = () => {
     setShowLogin(true);
     setShowRegister(false);
   };
 
-  // Mostrar registro y ocultar login
   const openRegister = () => {
     setShowRegister(true);
     setShowLogin(false);
   };
 
-  // Cerrar formularios
   const closeForms = () => {
     setShowLogin(false);
     setShowRegister(false);
   };
 
-  // Manejar cierre de sesión
   const handleLogout = () => {
     localStorage.removeItem("usuario");
     setUsuario(null);
