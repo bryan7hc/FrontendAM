@@ -8,7 +8,7 @@ import slugify from "../utils/slugify";
 const CatalogoPorCategoria = () => {
   const { categoria } = useParams(); // Categoria obtenida de la URL
   const [vehiculos, setVehiculos] = useState([]);
-  const API_URL = process.env.REACT_APP_API_URL; // Usamos la variable de entorno para la URL del backend
+  const API_URL = 'automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net'; // Usamos la variable de entorno para la URL del backend
   const backendUrl = `${API_URL}/imagenes`; // URL base para las imágenes
 
   useEffect(() => {
