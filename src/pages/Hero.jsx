@@ -13,14 +13,17 @@ import Sustentabilidad from "../assets/Sustentabilidad.png";
 
 const Hero = () => {
   const [autosDestacados, setAutosDestacados] = useState([]);
-  const API_URL = "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net"; // URL del backend de Azure
+  const API_URL =
+    "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net"; // URL del backend de Azure
   const backendUrl = `${API_URL}/imagenes`;
 
   useEffect(() => {
     const obtenerDestacados = async () => {
       try {
         // Cambié la URL para que apunte al backend en Azure
-        const res = await axios.get(`${API_URL}/api/vehiculos/destacados`);
+        const res = await axios.get(
+          `https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/vehiculos/destacados`
+        );
 
         const autos = res.data.map((auto) => ({
           ...auto,
