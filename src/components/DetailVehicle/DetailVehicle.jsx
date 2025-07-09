@@ -24,13 +24,15 @@ const DetailVehicle = () => {
   const [vehiculo, setVehiculo] = useState(null);
   const navigate = useNavigate();
 
+  const API_URL = process.env.REACT_APP_API_URL; // Usar la variable de entorno
+
   useEffect(() => {
     if (!slug) {
       console.warn("Slug no definido en URL");
       return;
     }
     axios
-      .get(`http://localhost:3000/api/vehiculos/slug/${slug}`)
+      .get(`${API_URL}/api/vehiculos/slug/${slug}`)
       .then((res) => {
         setVehiculo(res.data);
       })
@@ -56,7 +58,7 @@ const DetailVehicle = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white rounded-2xl shadow-sm p-8">
         <div className="flex justify-center items-center bg-gray-100 rounded-xl p-6">
           <img
-            src={`http://localhost:3000/imagenes/${vehiculo.imagen}`}
+            src={`${API_URL}/imagenes/${vehiculo.imagen}`}
             alt={vehiculo.nombre}
             className="w-full h-80 object-contain"
           />

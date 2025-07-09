@@ -9,12 +9,14 @@ const Perfil = () => {
   const [formData, setFormData] = useState({});
   const [mostrarModal, setMostrarModal] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL; // Usar la variable de entorno
+
   useEffect(() => {
     const fetchDatosUsuario = async () => {
       try {
         if (usuarioLS?.usuario_id) {
           const res = await axios.get(
-            `http://localhost:3000/api/usuarios/${usuarioLS.usuario_id}`
+            `${API_URL}/api/usuarios/${usuarioLS.usuario_id}`
           );
           setUsuario(res.data);
         }
@@ -48,7 +50,7 @@ const Perfil = () => {
   const handleGuardarPerfil = async () => {
     try {
       await axios.put(
-        `http://localhost:3000/api/usuarios/${usuarioLS.usuario_id}`,
+        `${API_URL}/api/usuarios/${usuarioLS.usuario_id}`,
         formData
       );
       setUsuario({ ...usuario, ...formData });
@@ -258,7 +260,7 @@ const ModalCambiarContrasena = ({ visible, onClose, usuarioId }) => {
 
     try {
       const res = await axios.put(
-        `http://localhost:3000/api/usuarios/${usuarioId}/cambiar-contrasena`,
+        `${process.env.REACT_APP_API_URL}/api/usuarios/${usuarioId}/cambiar-contrasena`,
         { actual, nueva }
       );
       setMensaje("✅ Contraseña actualizada correctamente.");

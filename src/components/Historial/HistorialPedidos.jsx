@@ -9,6 +9,7 @@ import {
 
 const HistorialPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL; // Utilizar la variable de entorno para la URL del backend
 
   useEffect(() => {
     const fetchPedidos = async () => {
@@ -17,7 +18,7 @@ const HistorialPedidos = () => {
 
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/pedidos/usuario/${usuario.usuario_id}`
+          `${API_URL}/api/pedidos/usuario/${usuario.usuario_id}`
         );
         setPedidos(res.data);
       } catch (error) {
@@ -26,7 +27,7 @@ const HistorialPedidos = () => {
     };
 
     fetchPedidos();
-  }, []);
+  }, [API_URL]);
 
   return (
     <div className="mt-38 px-4 max-w-5xl mx-auto">
@@ -78,7 +79,7 @@ const HistorialPedidos = () => {
                 {/* Botón alineado a la derecha */}
                 <div className="flex items-end justify-end">
                   <a
-                    href={`http://localhost:3000/api/comprobantes/${pedido.pedido_id}`}
+                    href={`${API_URL}/api/comprobantes/${pedido.pedido_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gray-800 hover:bg-gray-700 text-white font-medium px-5 py-2.5 rounded-md transition duration-200"

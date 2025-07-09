@@ -44,9 +44,12 @@ const DatosCompra = () => {
         return;
       }
 
+      // URL dinámica para la API
+      const API_URL = process.env.REACT_APP_API_URL;
+
       // 1. Actualizar en la BD los datos adicionales del usuario
       await axios.put(
-        "http://localhost:3000/api/usuarios/actualizar-datos-compra",
+        `${API_URL}/api/usuarios/actualizar-datos-compra`,
         {
           usuario_id: usuario.usuario_id,
           direccion: form.direccion,
@@ -73,7 +76,7 @@ const DatosCompra = () => {
       };
 
       const res = await axios.post(
-        "http://localhost:3000/api/pago/crear-preferencia",
+        `${API_URL}/api/pago/crear-preferencia`,
         {
           vehiculo,
           comprador,
@@ -108,13 +111,13 @@ const DatosCompra = () => {
             Información del comprador
           </h2>
 
-          {[
+          {[ 
             { label: "Nombre completo", name: "nombre" },
             { label: "Correo electrónico", name: "correo" },
             { label: "Teléfono", name: "telefono" },
             { label: "Dirección", name: "direccion" },
             { label: "Ciudad", name: "ciudad" },
-            { label: "DNI o RUC", name: "dni" },
+            { label: "DNI o RUC", name: "dni" }
           ].map(({ label, name }) => (
             <div key={name}>
               <label className="block text-sm text-gray-600 mb-1">
@@ -136,15 +139,12 @@ const DatosCompra = () => {
               Métodos de pago
             </h3>
             <div className="grid gap-3">
-              {[
+              {[ 
                 { value: "mercado_pago", label: "Mercado Pago (activo)" },
                 { value: "yape", label: "Yape (simulado)" },
                 { value: "plin", label: "Plin (simulado)" },
                 { value: "tarjeta", label: "Tarjeta de crédito (simulado)" },
-                {
-                  value: "transferencia",
-                  label: "Transferencia bancaria (simulado)",
-                },
+                { value: "transferencia", label: "Transferencia bancaria (simulado)" }
               ].map((m) => (
                 <label
                   key={m.value}

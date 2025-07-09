@@ -8,12 +8,12 @@ const DetallePedido = () => {
   const [error, setError] = useState("");
   const [descargando, setDescargando] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL; // Usar la variable de entorno para la URL del backend
+
   useEffect(() => {
     const fetchDetalle = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/pedidos/${id}`
-        );
+        const response = await axios.get(`${API_URL}/api/pedidos/${id}`);
         setPedido(response.data);
       } catch (err) {
         console.error("Error al obtener el pedido:", err);
@@ -21,13 +21,13 @@ const DetallePedido = () => {
       }
     };
     fetchDetalle();
-  }, [id]);
+  }, [id, API_URL]);
 
   const descargarComprobante = async () => {
     try {
       setDescargando(true);
       const response = await axios.get(
-        `http://localhost:3000/api/pedidos/${id}/comprobante`,
+        `${API_URL}/api/pedidos/${id}/comprobante`,
         { responseType: "blob" }
       );
 
@@ -47,7 +47,7 @@ const DetallePedido = () => {
 
   const cancelarPedido = async () => {
     try {
-      await axios.post(`http://localhost:3000/api/pedidos/${id}/cancelar`);
+      await axios.post(`${API_URL}/api/pedidos/${id}/cancelar`);
       alert("Pedido cancelado exitosamente.");
       window.location.reload();
     } catch (err) {

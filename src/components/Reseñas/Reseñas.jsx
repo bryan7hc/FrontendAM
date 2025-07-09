@@ -10,7 +10,7 @@ const Reseñas = ({ vehiculoId }) => {
   const obtenerReseñas = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/vehiculos/${vehiculoId}/resenas`
+        `https://automundo.azurewebsites.net/api/vehiculos/${vehiculoId}/resenas` // Cambiado a la URL de Azure
       );
       setComentarios(res.data);
     } catch (error) {
@@ -23,7 +23,7 @@ const Reseñas = ({ vehiculoId }) => {
 
     try {
       await axios.post(
-        `http://localhost:3000/api/vehiculos/${vehiculoId}/resenas`,
+        `https://automundo.azurewebsites.net/api/vehiculos/${vehiculoId}/resenas`, // Cambiado a la URL de Azure
         {
           usuario_id: usuario.usuario_id,
           comentario: nuevoComentario,
@@ -43,9 +43,7 @@ const Reseñas = ({ vehiculoId }) => {
       {[...Array(5)].map((_, index) => (
         <span
           key={index}
-          className={`text-sm ${
-            index < cantidad ? "text-yellow-400" : "text-gray-300"
-          }`}
+          className={`text-sm ${index < cantidad ? "text-yellow-400" : "text-gray-300"}`}
         >
           ★
         </span>
@@ -60,9 +58,7 @@ const Reseñas = ({ vehiculoId }) => {
           key={estrella}
           type="button"
           onClick={() => setCalificacion(estrella)}
-          className={`text-base ${
-            calificacion >= estrella ? "text-yellow-400" : "text-gray-300"
-          } hover:scale-105 transition`}
+          className={`text-base ${calificacion >= estrella ? "text-yellow-400" : "text-gray-300"} hover:scale-105 transition`}
         >
           ★
         </button>
@@ -72,7 +68,7 @@ const Reseñas = ({ vehiculoId }) => {
 
   useEffect(() => {
     obtenerReseñas();
-  }, []);
+  }, [vehiculoId]);
 
   return (
     <div className="mt-16">
@@ -86,14 +82,9 @@ const Reseñas = ({ vehiculoId }) => {
       ) : (
         <div className="space-y-3">
           {comentarios.map((comentario) => (
-            <div
-              key={comentario.reseña_id}
-              className="bg-gray-50 border border-gray-200 rounded-md p-3"
-            >
+            <div key={comentario.reseña_id} className="bg-gray-50 border border-gray-200 rounded-md p-3">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-gray-700">
-                  {comentario.nombre}
-                </span>
+                <span className="text-sm font-medium text-gray-700">{comentario.nombre}</span>
                 {renderEstrellas(comentario.calificacion)}
               </div>
               <p className="text-sm text-gray-700">{comentario.comentario}</p>
@@ -127,9 +118,7 @@ const Reseñas = ({ vehiculoId }) => {
           </div>
         </div>
       ) : (
-        <p className="mt-6 text-sm text-gray-500">
-          Inicia sesión para dejar una reseña.
-        </p>
+        <p className="mt-6 text-sm text-gray-500">Inicia sesión para dejar una reseña.</p>
       )}
     </div>
   );

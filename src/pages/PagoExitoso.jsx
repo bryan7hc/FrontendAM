@@ -12,6 +12,7 @@ const PagoExitoso = () => {
   const cantidad = searchParams.get("cantidad");
 
   useEffect(() => {
+    // Validamos el estado y otros parámetros
     if (estado === "confirmado" && userId && vehiculoId && cantidad) {
       setMensaje("✅ ¡Gracias por tu compra! El pago fue aprobado.");
     } else {

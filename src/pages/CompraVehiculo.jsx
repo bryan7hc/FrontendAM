@@ -1,4 +1,3 @@
-// frontend/src/pages/Compra.jsx
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -33,13 +32,16 @@ const Compra = () => {
   };
 
   const handleMercadoPago = async () => {
+    // Usamos la variable de entorno sin la necesidad de importar "process"
+    const API_URL = process.env.REACT_APP_API_URL; // Accedemos directamente a la variable de entorno
+
     try {
-      const res = await axios.post("http://localhost:3000/api/pagos/preferencia", {
+      const res = await axios.post(`${API_URL}/api/pagos/preferencia`, {
         vehiculo,
         comprador: form,
       });
 
-      // Redirige al sandbox o producción
+      // Redirige al sandbox o producción de MercadoPago
       window.location.href = res.data.init_point;
     } catch (err) {
       console.error("Error generando preferencia:", err);
