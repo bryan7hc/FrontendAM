@@ -10,6 +10,7 @@ const Login = ({ onLoginSuccess, onSwitchToRegister, onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Solicitud al backend de Azure
       const response = await axios.post(
         "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/auth/login",
         {
@@ -18,19 +19,22 @@ const Login = ({ onLoginSuccess, onSwitchToRegister, onClose }) => {
         }
       );
 
+      // Si el login es exitoso
       const usuario = response.data.usuario;
 
-      alert(response.data.mensaje);
-      localStorage.setItem("usuario", JSON.stringify(usuario));
-      onLoginSuccess(usuario);
-      onClose();
+      alert(response.data.mensaje); // Muestra el mensaje del backend
+      localStorage.setItem("usuario", JSON.stringify(usuario)); // Guarda el usuario en localStorage
+      onLoginSuccess(usuario); // Llama a la función para manejar el éxito del login
+      onClose(); // Cierra el modal de login
 
+      // Redirige al usuario según su rol
       if (usuario.rol === "admin") {
         navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/"); // Página de inicio si es un cliente
       }
     } catch (error) {
+      // En caso de error, muestra el mensaje de error
       alert(error.response?.data?.error || "Error al iniciar sesión");
     }
   };
