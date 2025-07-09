@@ -10,10 +10,13 @@ const Login = ({ onLoginSuccess, onSwitchToRegister, onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
-        correo,
-        contraseña,
-      });
+      const response = await axios.post(
+        "https://automundo-aqarbhcmbteegrcv.canadacentral-01.azurewebsites.net/api/auth/login",
+        {
+          correo,
+          contraseña,
+        }
+      );
 
       const usuario = response.data.usuario;
 
